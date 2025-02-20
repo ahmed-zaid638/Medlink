@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Cairo } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
+const cairo = Cairo({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600"],
+});
 
 export const metadata: Metadata = {
   title: "MED Link",
@@ -18,10 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cairo.className}>
         <div>
           <Header />
-          <main className="p-4 md:px-20 min-h-[59vh] bg-[#F5F5F5]">{children}</main>
+          <main className="p-4 md:px-20 min-h-[59vh] bg-[#F5F5F5]">
+            {children}
+          </main>
           <Footer />
         </div>
       </body>

@@ -14,7 +14,7 @@ const SignUpForm = () => {
   return (
     <div
       dir="rtl"
-      className="flex items-center justify-center min-h-screen bg-gray-100"
+      className="flex items-center justify-center min-h-[90vh] bg-gray-100"
     >
       <div className="bg-white shadow-md rounded  w-full max-w-md">
         <div
