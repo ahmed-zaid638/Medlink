@@ -53,7 +53,7 @@ const SignUpForm = () => {
             >
               رقم المحمول
             </label>
-            <div className="relative">
+            <div className="">
               <input
                 id="phone"
                 type="text"
