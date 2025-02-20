@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MedLink 🩺
 
-## Getting Started
+MedLink is a Next.js application designed to connect **doctors** and **patients** in a streamlined, user-friendly environment. It offers features such as doctor-patient communication, appointment scheduling, and healthcare resources—all in one place.
 
-First, run the development server:
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
+---
+
+## Features
+
+- **Doctor Profiles:** Allows doctors to create and manage their professional profiles, including specializations, experience, and clinic locations.
+- **Patient Management:** Patients can search for doctors by specialty, book appointments, and maintain a medical history.
+- **Appointment Scheduling:** A built-in scheduling system that enables easy appointment bookings and reminders.
+- **Secure Messaging:** Real-time messaging between doctors and patients for quick consultations and follow-ups.
+- **Multilingual Support:** Tailored for different languages, making it accessible to a broader audience.
+
+---
+
+## Tech Stack
+
+- **Front End:** [Next.js](https://nextjs.org/) (React-based framework), [Tailwind CSS](https://tailwindcss.com/) for styling
+- **Back End:** .Net /(or Next.js API routes)    
+- **Deployment:** Vercel, AWS, or any hosting platform that supports Next.js
+
+---
+
+## Installation
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/medlink.git
+
+## Folder Structure
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+/medlink/
+├─ public/                 # Public assets (images, icons, fonts)
+│   ├─ images/             # Images used in the project
+│   ├─ icons/              # Icons for UI elements
+│   ├─ logo.png            # Application logo
+│   └─ favicon.ico         # Favicon
+│
+├─ src/                    # Main application source code
+│   ├─ app/                # Next.js App Router files (if applicable)
+│   ├─ components/         # Reusable React components
+│   │   ├─ ui/             # UI components (buttons, cards, modals, etc.)
+│   │   ├─ forms/          # Form components
+│   │   ├─ layouts/        # Layout components (headers, footers, etc.)
+│   │   ├─ auth/           # Authentication components
+│   │   └─ dashboard/      # Dashboard-specific components
+│   │
+│   ├─ pages/              # Next.js pages (if using the Pages Router)
+│   │   ├─ index.tsx       # Homepage
+│   │   ├─ login.tsx       # Login page
+│   │   ├─ signup.tsx      # Signup page
+│   │   ├─ profile.tsx     # User profile page
+│   │   ├─ appointments/   # Appointment-related pages
+│   │   ├─ doctors/        # Doctor listing and profile pages
+│   │   ├─ patients/       # Patient-related pages
+│   │   └─ api/            # API routes (if using Next.js API routes)
+│   │
+│   ├─ styles/             # Global styles and Tailwind CSS configuration
+│   │   ├─ globals.css     # Main global styles
+│   │   └─ tailwind.css    # Tailwind configuration
+│   │
+│   ├─ hooks/              # Custom React hooks
+│   ├─ lib/                # Utility functions and helper libraries
+│   ├─ services/           # API services and request handling
+│   ├─ context/            # Global state management using React Context
+│   ├─ config/             # Configuration files
+│   ├─ constants/          # Constants used throughout the application
+│   ├─ middleware/         # Middleware logic (authentication, API handlers)
+│   ├─ tests/              # Unit and integration tests
+│   └─ types/              # TypeScript types and interfaces
+│
+├─ .env.local              # Environment variables (should be gitignored)
+├─ .gitignore              # Files and folders to be ignored by Git
+├─ next.config.js          # Next.js configuration
+├─ package.json            # Project configuration and dependencies
+├─ tsconfig.json           # TypeScript configuration
+├─ README.md               # Project documentation
+└─ LICENSE                 # Project license file
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
