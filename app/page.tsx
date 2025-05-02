@@ -1,9 +1,12 @@
 import React from "react";
+import Home from "./pages/home";
 
 function Page() {
   return (
     <div className="">
-      <div>MEDLink Home Page</div>
+      <div>
+        <Home />
+      </div>
     </div>
   );
 }

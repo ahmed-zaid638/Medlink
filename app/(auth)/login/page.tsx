@@ -3,14 +3,52 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { setToken } from "@/lib/auth";
 
 const LoginForm = () => {
-  const [countryCode, setCountryCode] = useState("+20");
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
   const logos = [
     "/icons/google2.png",
     "/icons/gmail.png",
     "/icons/facebook2.png",
   ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "http://medlink.runasp.net/Auth/User/Login",
+        {
+          Email: formData.email,
+          Password: formData.password,
+        }
+      );
+
+      setToken(res.data.data.token);
+
+      toast.success("تم تسجيل الدخول بنجاح!");
+      router.push("/"); // redirect to homepage or dashboard
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول";
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -43,6 +81,8 @@ const LoginForm = () => {
             <input
               id="email"
               type="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="ادخل البريد الإلكتروني الخاص بك"
               className="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
             />
@@ -58,6 +98,8 @@ const LoginForm = () => {
             <input
               id="password"
               type="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="ادخل كلمة السر الخاصة بك"
               className="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
             />
@@ -66,9 +108,11 @@ const LoginForm = () => {
           <div className="text-center">
             <button
               type="button"
-              className="w-[60%] bg-[#1B81AE] text-white font-semibold py-2 rounded"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-[60%] bg-[#1B81AE] text-white font-semibold py-2 rounded hover:bg-[#166d91] transition"
             >
-              تسجيل الدخول
+              {loading ? "جاري الدخول..." : "تسجيل الدخول"}
             </button>
           </div>
 

@@ -1,20 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react"; // Import icons from Lucide React
+import { Menu, X } from "lucide-react"; 
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const navLinks = [
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const unauthenticatedNavLinks = [
     { label: "انضم الأن", href: "/register", isButton: true },
     { label: "دخول", href: "/login" },
     { label: "صيدليات للأطباء", href: "/" },
     { label: "اتصل بنا", href: "/" },
     { label: "English", href: "/" },
   ];
+
+  const authenticatedNavLinks = [
+    { label: "لوحة التحكم", href: "/dashboard" },
+    // { label: "صيدليات للأطباء", href: "/" },
+    // { label: "اتصل بنا", href: "/" },
+    { label: "English", href: "/" },
+    { label: "خروج", href: "/logout", isButton: true },
+  ];
+
+  const navLinks = isAuthenticated
+    ? authenticatedNavLinks
+    : unauthenticatedNavLinks;
 
   return (
     <header className="flex justify-between items-center p-4 bg-[#4FC3F7] shadow-md md:px-20">
@@ -60,7 +78,11 @@ const Header = () => {
         className="md:hidden text-white text-2xl z-50"
         onClick={() => setMenuOpen(!menuOpen)}
       >
-        {menuOpen ? <X size={28}  color ="white"/> : <Menu size={28}  color="white"/>}
+        {menuOpen ? (
+          <X size={28} color="white" />
+        ) : (
+          <Menu size={28} color="white" />
+        )}
       </button>
 
       {/* Mobile Menu (Sliding from Right) */}

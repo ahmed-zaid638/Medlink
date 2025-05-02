@@ -3,6 +3,9 @@ import { Inter, Cairo } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./context/AuthContext";
+import MainWrapper from "./components/layout/MainWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({
@@ -23,11 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cairo.className}>
+        <Toaster position="top-center" />
         <div>
           <Header />
-          <main className="p-4 md:px-20 min-h-[59vh] bg-[#F5F5F5]">
-            {children}
-          </main>
+          <MainWrapper>
+            <AuthProvider>{children}</AuthProvider>
+          </MainWrapper>
           <Footer />
         </div>
       </body>
