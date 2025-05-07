@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react"; 
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,8 +17,8 @@ const Header = () => {
   const unauthenticatedNavLinks = [
     { label: "انضم الأن", href: "/register", isButton: true },
     { label: "دخول", href: "/login" },
-    { label: "صيدليات للأطباء", href: "/" },
-    { label: "اتصل بنا", href: "/" },
+    { label: "صيدليات للأطباء", href: "/doctors" },
+    { label: "اتصل بنا", href: "/contact" },
     { label: "English", href: "/" },
   ];
 

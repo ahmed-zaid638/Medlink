@@ -1,6 +1,7 @@
 "use client";
 
 import { Search, User, MapPin } from "lucide-react";
+import Solutions from "../components/Solutions";
 
 const Home = () => {
   const handleClick = () => {
@@ -68,6 +69,7 @@ const Home = () => {
           </div>
         </div>
       </main>
+      <Solutions />
     </div>
   );
 };
