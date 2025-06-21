@@ -1,142 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { setToken } from "@/lib/auth";
+import { FaUser, FaUserMd } from "react-icons/fa";
 
-const LoginForm = () => {
+export default function LoginChoicePage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
 
-  const logos = [
-    "/icons/google2.png",
-    "/icons/gmail.png",
-    "/icons/facebook2.png",
-  ];
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post(
-        "http://medlink.runasp.net/Auth/User/Login",
-        {
-          Email: formData.email,
-          Password: formData.password,
-        }
-      );
-
-      setToken(res.data.data.token);
-
-      toast.success("تم تسجيل الدخول بنجاح!");
-      router.push("/"); // redirect to homepage or dashboard
-    } catch (error: any) {
-      const message =
-        error?.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول";
-      toast.error(message);
-    } finally {
-      setLoading(false);
-    }
+  const handleChoose = (role: "user" | "doctor") => {
+    router.push(role === "user" ? "/login-user" : "/login-doctor");
   };
 
   return (
-    <div
-      dir="rtl"
-      className="flex items-center justify-center min-h-[90vh] bg-gray-100"
-    >
-      <div className="bg-white shadow-md rounded w-full max-w-md">
-        <div
-          className="text-white text-center py-2 font-bold"
-          style={{
-            background:
-              "linear-gradient(360deg, #4FC3F7 36.51%, #298DB9 76.01%, #0C75A4 100%)",
-          }}
-        >
-          تسجيل الدخول
-        </div>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="bg-white shadow-2xl rounded-2xl p-8 sm:p-12 max-w-lg w-full text-center space-y-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">من أنت؟</h1>
+        <p className="text-gray-500 mb-4">اختر نوع الحساب لتسجيل الدخول</p>
 
-        <div className="px-8 py-8">
-          <h1 className="text-2xl font-semibold text-center mb-6 text-[#023856]">
-            تسجيل الدخول
-          </h1>
-
-          <div className="mb-4">
-            <label
-              className="block text-[#034796] font-bold mb-1"
-              htmlFor="email"
-            >
-              البريد الإلكتروني
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="ادخل البريد الإلكتروني الخاص بك"
-              className="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-            />
+        <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          {/* User Login Card */}
+          <div
+            onClick={() => handleChoose("user")}
+            className="cursor-pointer flex-1 bg-white border-2 border-green-500 hover:bg-green-50 hover:shadow-lg transition-all rounded-xl p-6 space-y-3 text-right"
+          >
+            <FaUser className="text-green-600 text-4xl mx-auto mb-2" />
+            <h2 className="text-xl font-semibold text-gray-700">مستخدم عادي</h2>
+            <p className="text-gray-500 text-sm">
+              قم بتسجيل الدخول للبحث عن الأطباء وحجز المواعيد
+            </p>
           </div>
 
-          <div className="mb-6">
-            <label
-              className="block text-[#034796] font-bold mb-1"
-              htmlFor="password"
-            >
-              كلمة السر
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="ادخل كلمة السر الخاصة بك"
-              className="w-full border border-blue-200 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-[60%] bg-[#1B81AE] text-white font-semibold py-2 rounded hover:bg-[#166d91] transition"
-            >
-              {loading ? "جاري الدخول..." : "تسجيل الدخول"}
-            </button>
-          </div>
-
-          <div className="text-center my-4">
-            <span className="text-gray-500">أو قم بتسجيل الدخول بـ</span>
-          </div>
-          <div className="flex items-center justify-center gap-4">
-            {logos.map((img, index) => (
-              <button key={index} className="rounded p-2 hover:bg-gray-100">
-                <Image src={img} alt={`Image ${img}`} width={24} height={24} />
-              </button>
-            ))}
-          </div>
-
-          <div className="text-center mt-4">
-            <span className="text-gray-700">ليس لديك حساب؟ </span>
-            <Link href="/register" className="text-blue-600 hover:underline">
-              انضم الآن
-            </Link>
+          {/* Doctor Login Card */}
+          <div
+            onClick={() => handleChoose("doctor")}
+            className="cursor-pointer flex-1 bg-white border-2 border-blue-500 hover:bg-blue-50 hover:shadow-lg transition-all rounded-xl p-6 space-y-3 text-right"
+          >
+            <FaUserMd className="text-blue-600 text-4xl mx-auto mb-2" />
+            <h2 className="text-xl font-semibold text-gray-700">دكتور</h2>
+            <p className="text-gray-500 text-sm">
+              قم بتسجيل الدخول لإدارة ملفك الطبي والتواصل مع المرضى
+            </p>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default LoginForm;
+}

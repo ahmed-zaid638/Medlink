@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { getRole } from "@/lib/auth";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const role = getRole();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,12 +22,11 @@ const Header = () => {
     { label: "صيدليات للأطباء", href: "/doctors" },
     { label: "اتصل بنا", href: "/contact" },
     { label: "English", href: "/" },
+    { label: "الملف الشخصي", href: `/dashboard/${role}/profile` },
   ];
 
   const authenticatedNavLinks = [
-    { label: "لوحة التحكم", href: "/dashboard" },
-    // { label: "صيدليات للأطباء", href: "/" },
-    // { label: "اتصل بنا", href: "/" },
+    { label: "لوحة التحكم", href: `/dashboard/${role}` },
     { label: "English", href: "/" },
     { label: "خروج", href: "/logout", isButton: true },
   ];

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { clearToken } from "@/lib/auth";
+import { clearRole, clearToken, setRole } from "@/lib/auth";
 import toast from "react-hot-toast";
 
 const LogoutPage = () => {
@@ -10,6 +10,7 @@ const LogoutPage = () => {
 
   useEffect(() => {
     clearToken();
+    clearRole();
     toast.success("تم تسجيل الخروج بنجاح");
     router.push("/login");
   }, [router]);
