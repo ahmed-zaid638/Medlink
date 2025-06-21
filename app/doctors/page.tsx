@@ -1,84 +1,51 @@
+import Image from "next/image";
 import Link from "next/link";
+import data from "./data.json";
 
 export default function DoctorsPage() {
-  const doctors = [
-    {
-      id: 1,
-      name: "Dr. Sarah Johnson",
-      specialty: "Cardiology",
-      image: "/images/sample1.jpg", // Real image from Unsplash
-      rating: 4.9,
-      reviewCount: 124,
-      location: "New York, NY",
-      available: true,
-    },
-    {
-      id: 2,
-      name: "Dr. Michael Chen",
-      specialty: "Neurology",
-      image: "/images/sample2.png", // Real image from Unsplash
-      rating: 4.8,
-      reviewCount: 98,
-      location: "New York, NY",
-      available: true,
-    },
-    {
-      id: 3,
-      name: "Dr. Emily Rodriguez",
-      specialty: "Pediatrics",
-      image: "/images/sample1.jpg", // Real image from Unsplash
-      rating: 4.7,
-      reviewCount: 112,
-      location: "New York, NY",
-      available: false,
-    },
-    {
-      id: 4,
-      name: "Dr. David Wilson",
-      specialty: "Dermatology",
-      image: "/images/sample2.png", // Real image from Unsplash
-      rating: 4.9,
-      reviewCount: 87,
-      location: "New York, NY",
-      available: true,
-    },
-    {
-      id: 5,
-      name: "Dr. Jennifer Lee",
-      specialty: "Ophthalmology",
-      image: "/images/sample1.jpg", // Real image from Unsplash
-      rating: 4.6,
-      reviewCount: 76,
-      location: "New York, NY",
-      available: true,
-    },
-    {
-      id: 6,
-      name: "Dr. Robert Brown",
-      specialty: "Orthopedics",
-      image: "/images/sample2.png", // Real image from Unsplash
-      rating: 4.8,
-      reviewCount: 103,
-      location: "New York, NY",
-      available: true,
-    },
-  ];
-
   const specialties = [
     "Cardiology",
-    "Neurology",
     "Pediatrics",
+    "General Surgery",
     "Dermatology",
-    "Ophthalmology",
-    "Orthopedics",
+    "Neurology",
     "Gynecology",
+    "Orthopedics",
+    "Internal Medicine",
+    "Psychiatry",
+    "Ophthalmology",
+    "ENT",
+    "Pathology",
+    "Endocrinology",
+    "Rheumatology",
+    "Nephrology",
+    "Hematology",
+    "Gastroenterology",
+    "Family Medicine",
+    "Pulmonology",
+    "Oncology",
+    "Radiology",
+    "Anesthesiology",
+    "Dentistry",
     "Urology",
+    "Plastic Surgery",
+    "Vascular Surgery",
+    "Fertility",
   ];
+
+  const doctors = data.map((doctor) => ({
+    id: doctor.Id,
+    name: `Dr. ${doctor.FirstName} ${doctor.LastName}`,
+    specialty: specialties[(doctor.SpecialityId || 1) - 1] || "General",
+    image: `/images/doctors/${(doctor.Id)}.jpg`, // Sample image path
+    rating: doctor.Rate || 4.0,
+    reviewCount: Math.floor(Math.random() * 100) + 30,
+    location: "Cairo, Egypt",
+    available: doctor.Id % 2 === 0, // Simulated availability
+  }));
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-
       {/* Page Title */}
       <div className="bg-gradient-to-r from-[#4fc3f7] to-[#4fc3f7] text-white py-12">
         <div className="container mx-auto px-4 text-center">
@@ -92,7 +59,7 @@ export default function DoctorsPage() {
         </div>
       </div>
 
-      {/* Search Section */}
+      {/* Search Filters */}
       <div className="container mx-auto px-4 py-6">
         <div className="bg-white rounded-lg shadow-lg p-6 -mt-12 relative z-10">
           <div className="flex flex-col md:flex-row gap-4">
@@ -100,7 +67,7 @@ export default function DoctorsPage() {
               <input
                 type="text"
                 placeholder="Search by doctor name or specialty"
-                className="border p-2 pl-10"
+                className="w-full border p-2 rounded-md"
               />
             </div>
             <div className="flex-1">
@@ -114,14 +81,12 @@ export default function DoctorsPage() {
             <div className="flex-1">
               <select className="w-full border border-gray-300 rounded-md p-2">
                 <option>All Locations</option>
-                <option>New York, NY</option>
-                <option>Los Angeles, CA</option>
-                <option>Chicago, IL</option>
-                <option>Houston, TX</option>
+                <option>Cairo, Egypt</option>
+                <option>Giza, Egypt</option>
               </select>
             </div>
-            <button className="bg-blue-600 hover:bg-blue-700 p-2">
-              <span className="icon-search"></span> Search
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-md">
+              Search
             </button>
           </div>
         </div>
@@ -130,96 +95,32 @@ export default function DoctorsPage() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
+          {/* Sidebar Filters */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold">Filters</h2>
-                <button className="text-blue-600 hover:text-blue-800">
-                  Reset All
-                </button>
-              </div>
+              <h2 className="text-lg font-bold mb-4">Filters</h2>
 
-              {/* Filter Options */}
-              <div className="border-t pt-4 pb-2">
-                <h3 className="font-semibold mb-3">Availability</h3>
+              <div className="mb-4 border-t pt-4">
+                <h3 className="font-semibold mb-2">Availability</h3>
                 <div className="space-y-2">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="available-now"
-                      className="mr-2"
-                    />
-                    <label htmlFor="available-now">Available Today</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="available-tomorrow"
-                      className="mr-2"
-                    />
-                    <label htmlFor="available-tomorrow">
-                      Available Tomorrow
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="available-week"
-                      className="mr-2"
-                    />
-                    <label htmlFor="available-week">Available This Week</label>
-                  </div>
+                  <label className="flex items-center">
+                    <input type="checkbox" className="mr-2" /> Available Today
+                  </label>
+                  <label className="flex items-center">
+                    <input type="checkbox" className="mr-2" /> Available This Week
+                  </label>
                 </div>
               </div>
 
-              <div className="border-t pt-4 pb-2">
-                <h3 className="font-semibold mb-3">Gender</h3>
+              <div className="mb-4 border-t pt-4">
+                <h3 className="font-semibold mb-2">Rating</h3>
                 <div className="space-y-2">
-                  <div className="flex items-center">
-                    <input type="checkbox" id="gender-male" className="mr-2" />
-                    <label htmlFor="gender-male">Male</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="gender-female"
-                      className="mr-2"
-                    />
-                    <label htmlFor="gender-female">Female</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-4 pb-2">
-                <h3 className="font-semibold mb-3">Experience</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center">
-                    <input type="checkbox" id="exp-0-5" className="mr-2" />
-                    <label htmlFor="exp-0-5">0-5 years</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input type="checkbox" id="exp-5-10" className="mr-2" />
-                    <label htmlFor="exp-5-10">5-10 years</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input type="checkbox" id="exp-10-plus" className="mr-2" />
-                    <label htmlFor="exp-10-plus">10+ years</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-4 pb-2">
-                <h3 className="font-semibold mb-3">Rating</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center">
-                    <input type="checkbox" id="rating-4plus" className="mr-2" />
-                    <label htmlFor="rating-4plus">4+ stars</label>
-                  </div>
-                  <div className="flex items-center">
-                    <input type="checkbox" id="rating-5" className="mr-2" />
-                    <label htmlFor="rating-5">5 stars</label>
-                  </div>
+                  <label className="flex items-center">
+                    <input type="checkbox" className="mr-2" /> 4+ Stars
+                  </label>
+                  <label className="flex items-center">
+                    <input type="checkbox" className="mr-2" /> 5 Stars
+                  </label>
                 </div>
               </div>
             </div>
@@ -232,31 +133,31 @@ export default function DoctorsPage() {
                 <Link
                   key={doctor.id}
                   href={`/doctors/${doctor.id}`}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden"
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
                 >
-                  <img
+                  <Image
                     src={doctor.image}
                     alt={doctor.name}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-60 object-cover"
+                    width={400}
+                    height={300}
                   />
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold">{doctor.name}</h3>
-                    <p className="text-sm text-gray-600 mb-2">
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold mb-1">{doctor.name}</h3>
+                    <p className="text-sm text-gray-600 mb-1">
                       {doctor.specialty}
                     </p>
-                    <div className="flex items-center text-yellow-500 mb-2">
-                      <span className="icon-star"></span>
-                      <span>{doctor.rating}</span> ({doctor.reviewCount}{" "}
-                      reviews)
+                    <div className="text-yellow-500 mb-2">
+                      ★ {doctor.rating.toFixed(1)} ({doctor.reviewCount} reviews)
                     </div>
                     <p className="text-sm text-gray-600">{doctor.location}</p>
-                    <button
-                      className={`mt-4 p-2 text-white rounded-full ${
-                        doctor.available ? "bg-green-500" : "bg-gray-500"
+                    <span
+                      className={`inline-block mt-3 text-xs font-semibold px-3 py-1 rounded-full ${
+                        doctor.available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
                       }`}
                     >
                       {doctor.available ? "Available Now" : "Not Available"}
-                    </button>
+                    </span>
                   </div>
                 </Link>
               ))}

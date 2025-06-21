@@ -37,7 +37,7 @@ const LoginForm = () => {
       );
 
       setToken(res.data.data.token);
-      setRole("User");
+      setRole("user");
       toast.success("تم تسجيل الدخول بنجاح!");
       router.push("/dashboard"); 
     } catch (error: any) {
