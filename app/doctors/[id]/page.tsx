@@ -1,16 +1,16 @@
-import Image from "next/image";
-import Link from "next/link";
 import {
-  Calendar,
-  MapPin,
-  Phone,
-  Mail,
-  Star,
   Award,
   Briefcase,
-  GraduationCap,
+  Calendar,
   ChevronRight,
+  GraduationCap,
+  Mail,
+  MapPin,
+  Phone,
+  Star,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import data from "../data.json"; // adjust path based on structure
 
 const specialties = [
@@ -92,7 +92,7 @@ export default function DoctorProfile({ params }: { params: { id: string } }) {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen">
       {/* Breadcrumb */}
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-3 text-sm text-gray-600 flex items-center">
@@ -124,9 +124,7 @@ export default function DoctorProfile({ params }: { params: { id: string } }) {
             </div>
 
             <div className="mt-6 bg-white border rounded-lg p-4">
-              <h3 className="font-semibold text-lg mb-3">
-                معلومات التواصل
-              </h3>
+              <h3 className="font-semibold text-lg mb-3">معلومات التواصل</h3>
               <div className="space-y-3">
                 <div className="flex items-start">
                   <MapPin className="text-blue-600 h-5 w-5 mr-3 mt-1" />
@@ -177,10 +175,13 @@ export default function DoctorProfile({ params }: { params: { id: string } }) {
                     ({doctor.reviewCount} تقييم)
                   </span>
                 </div>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center text-sm">
+                <Link
+                  href={`/doctors/${doctor.id}/schedule`}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center text-sm"
+                >
                   <Calendar className="h-4 w-4 mr-2" />
-                  احجز موعد
-                </button>
+                  Schedule
+                </Link>
               </div>
             </div>
 
@@ -229,6 +230,12 @@ export default function DoctorProfile({ params }: { params: { id: string } }) {
                   </span>
                 ))}
               </div>
+              <Link
+                href={`/doctors/${doctor.id}/reports/`}
+                className="text-blue-600 mt-4 text-lg block"
+              >
+                التقارير
+              </Link>
             </div>
           </section>
         </div>

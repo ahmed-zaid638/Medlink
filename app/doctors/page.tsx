@@ -1,55 +1,57 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import data from "./data.json";
+import { useParams } from "next/navigation";
 import { useState } from "react";
+import data from "./data.json";
 
 export default function DoctorsPage() {
-const specialties = [
-  { id: 24, name: "أخصائي أشعة" },
-  { id: 20, name: "أخصائي أطفال" },
-  { id: 13, name: "أخصائي أعصاب" },
-  { id: 19, name: "أخصائي أمراض" },
-  { id: 10, name: "أخصائي أمراض معدية" },
-  { id: 18, name: "أخصائي أنف وأذن وحنجرة" },
-  { id: 15, name: "أخصائي أورام" },
-  { id: 2, name: "أخصائي تخدير" },
-  { id: 4, name: "أخصائي جلدية" },
-  { id: 6, name: "أخصائي جهاز هضمي" },
-  { id: 1, name: "أخصائي حساسية/مناعة" },
-  { id: 9, name: "أخصائي دم" },
-  { id: 25, name: "أخصائي روماتيزم" },
-  { id: 23, name: "أخصائي صدر" },
-  { id: 8, name: "أخصائي طب كبار السن" },
-  { id: 16, name: "أخصائي عيون" },
-  { id: 5, name: "أخصائي غدد صماء" },
-  { id: 3, name: "أخصائي قلب" },
-  { id: 12, name: "أخصائي كلى" },
-  { id: 27, name: "أخصائي مسالك بولية" },
-  { id: 14, name: "أخصائي نساء وتوليد" },
-  { id: 22, name: "أخصائي نفسية" },
-  { id: 21, name: "جراح تجميل" },
-  { id: 26, name: "جراح عام" },
-  { id: 17, name: "جراح عظام" },
-  { id: 11, name: "طبيب باطنية" },
-  { id: 7, name: "طبيب عام" }
-];
+  const { id } = useParams();
+
+  const specialties = [
+    { id: 24, name: "أخصائي أشعة" },
+    { id: 20, name: "أخصائي أطفال" },
+    { id: 13, name: "أخصائي أعصاب" },
+    { id: 19, name: "أخصائي أمراض" },
+    { id: 10, name: "أخصائي أمراض معدية" },
+    { id: 18, name: "أخصائي أنف وأذن وحنجرة" },
+    { id: 15, name: "أخصائي أورام" },
+    { id: 2, name: "أخصائي تخدير" },
+    { id: 4, name: "أخصائي جلدية" },
+    { id: 6, name: "أخصائي جهاز هضمي" },
+    { id: 1, name: "أخصائي حساسية/مناعة" },
+    { id: 9, name: "أخصائي دم" },
+    { id: 25, name: "أخصائي روماتيزم" },
+    { id: 23, name: "أخصائي صدر" },
+    { id: 8, name: "أخصائي طب كبار السن" },
+    { id: 16, name: "أخصائي عيون" },
+    { id: 5, name: "أخصائي غدد صماء" },
+    { id: 3, name: "أخصائي قلب" },
+    { id: 12, name: "أخصائي كلى" },
+    { id: 27, name: "أخصائي مسالك بولية" },
+    { id: 14, name: "أخصائي نساء وتوليد" },
+    { id: 22, name: "أخصائي نفسية" },
+    { id: 21, name: "جراح تجميل" },
+    { id: 26, name: "جراح عام" },
+    { id: 17, name: "جراح عظام" },
+    { id: 11, name: "طبيب باطنية" },
+    { id: 7, name: "طبيب عام" },
+  ];
 
   const [searchName, setSearchName] = useState("");
-
 
   const doctors = data.map((doctor) => ({
     id: doctor.Id,
     name: `Dr. ${doctor.FirstName} ${doctor.LastName}`,
     specialty: specialties[(doctor.SpecialityId || 1) - 1] || "General",
-    image: `/images/doctors/${(doctor.Id)}.jpg`, // Sample image path
+    image: `/images/doctors/${doctor.Id}.jpg`, // Sample image path
     rating: doctor.Rate || 4.0,
     reviewCount: Math.floor(Math.random() * 100) + 30,
     location: "Cairo, Egypt",
     available: doctor.Id % 2 === 0, // Simulated availability
   }));
 
-    const filteredDoctors = doctors.filter((doctor) =>
+  const filteredDoctors = doctors.filter((doctor) =>
     doctor.name.toLowerCase().includes(searchName.toLowerCase())
   );
   return (
@@ -117,7 +119,8 @@ const specialties = [
                     <input type="checkbox" className="mr-2" /> Available Today
                   </label>
                   <label className="flex items-center">
-                    <input type="checkbox" className="mr-2" /> Available This Week
+                    <input type="checkbox" className="mr-2" /> Available This
+                    Week
                   </label>
                 </div>
               </div>
@@ -157,13 +160,22 @@ const specialties = [
                     <p className="text-sm text-gray-600 mb-1">
                       {doctor.specialty.name}
                     </p>
-                    <div className="text-yellow-500 mb-2">
-                      ★ {doctor.rating.toFixed(1)} ({doctor.reviewCount} reviews)
-                    </div>
+
+                    <Link
+                      href={`/doctors/${doctor.id}/reviews`}
+                      className="text-yellow-500 mb-2"
+                    >
+                      ★ {doctor.rating.toFixed(1)} ({doctor.reviewCount}{" "}
+                      reviews)
+                    </Link>
+
+                    
                     <p className="text-sm text-gray-600">{doctor.location}</p>
                     <span
                       className={`inline-block mt-3 text-xs font-semibold px-3 py-1 rounded-full ${
-                        doctor.available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
+                        doctor.available
+                          ? "bg-green-100 text-green-700"
+                          : "bg-gray-100 text-gray-600"
                       }`}
                     >
                       {doctor.available ? "Available Now" : "Not Available"}
