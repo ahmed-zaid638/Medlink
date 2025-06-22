@@ -22,7 +22,6 @@ const Header = () => {
     { label: "صيدليات للأطباء", href: "/doctors" },
     { label: "اتصل بنا", href: "/contact" },
     { label: "English", href: "/" },
-    { label: "الملف الشخصي", href: `/dashboard/${role}/profile` },
   ];
 
   const authenticatedNavLinks = [

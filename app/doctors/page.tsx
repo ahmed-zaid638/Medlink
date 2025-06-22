@@ -1,37 +1,42 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import data from "./data.json";
+import { useState } from "react";
 
 export default function DoctorsPage() {
-  const specialties = [
-    "Cardiology",
-    "Pediatrics",
-    "General Surgery",
-    "Dermatology",
-    "Neurology",
-    "Gynecology",
-    "Orthopedics",
-    "Internal Medicine",
-    "Psychiatry",
-    "Ophthalmology",
-    "ENT",
-    "Pathology",
-    "Endocrinology",
-    "Rheumatology",
-    "Nephrology",
-    "Hematology",
-    "Gastroenterology",
-    "Family Medicine",
-    "Pulmonology",
-    "Oncology",
-    "Radiology",
-    "Anesthesiology",
-    "Dentistry",
-    "Urology",
-    "Plastic Surgery",
-    "Vascular Surgery",
-    "Fertility",
-  ];
+const specialties = [
+  { id: 24, name: "أخصائي أشعة" },
+  { id: 20, name: "أخصائي أطفال" },
+  { id: 13, name: "أخصائي أعصاب" },
+  { id: 19, name: "أخصائي أمراض" },
+  { id: 10, name: "أخصائي أمراض معدية" },
+  { id: 18, name: "أخصائي أنف وأذن وحنجرة" },
+  { id: 15, name: "أخصائي أورام" },
+  { id: 2, name: "أخصائي تخدير" },
+  { id: 4, name: "أخصائي جلدية" },
+  { id: 6, name: "أخصائي جهاز هضمي" },
+  { id: 1, name: "أخصائي حساسية/مناعة" },
+  { id: 9, name: "أخصائي دم" },
+  { id: 25, name: "أخصائي روماتيزم" },
+  { id: 23, name: "أخصائي صدر" },
+  { id: 8, name: "أخصائي طب كبار السن" },
+  { id: 16, name: "أخصائي عيون" },
+  { id: 5, name: "أخصائي غدد صماء" },
+  { id: 3, name: "أخصائي قلب" },
+  { id: 12, name: "أخصائي كلى" },
+  { id: 27, name: "أخصائي مسالك بولية" },
+  { id: 14, name: "أخصائي نساء وتوليد" },
+  { id: 22, name: "أخصائي نفسية" },
+  { id: 21, name: "جراح تجميل" },
+  { id: 26, name: "جراح عام" },
+  { id: 17, name: "جراح عظام" },
+  { id: 11, name: "طبيب باطنية" },
+  { id: 7, name: "طبيب عام" }
+];
+
+  const [searchName, setSearchName] = useState("");
+
 
   const doctors = data.map((doctor) => ({
     id: doctor.Id,
@@ -44,6 +49,9 @@ export default function DoctorsPage() {
     available: doctor.Id % 2 === 0, // Simulated availability
   }));
 
+    const filteredDoctors = doctors.filter((doctor) =>
+    doctor.name.toLowerCase().includes(searchName.toLowerCase())
+  );
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Title */}
@@ -66,6 +74,8 @@ export default function DoctorsPage() {
             <div className="flex-1 relative">
               <input
                 type="text"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
                 placeholder="Search by doctor name or specialty"
                 className="w-full border p-2 rounded-md"
               />
@@ -74,7 +84,7 @@ export default function DoctorsPage() {
               <select className="w-full border border-gray-300 rounded-md p-2">
                 <option>All Specialties</option>
                 {specialties.map((specialty, index) => (
-                  <option key={index}>{specialty}</option>
+                  <option key={index}>{specialty.name}</option>
                 ))}
               </select>
             </div>
@@ -129,7 +139,7 @@ export default function DoctorsPage() {
           {/* Doctor Cards */}
           <div className="lg:w-3/4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {doctors.map((doctor) => (
+              {filteredDoctors.map((doctor) => (
                 <Link
                   key={doctor.id}
                   href={`/doctors/${doctor.id}`}
@@ -145,7 +155,7 @@ export default function DoctorsPage() {
                   <div className="p-4">
                     <h3 className="text-lg font-bold mb-1">{doctor.name}</h3>
                     <p className="text-sm text-gray-600 mb-1">
-                      {doctor.specialty}
+                      {doctor.specialty.name}
                     </p>
                     <div className="text-yellow-500 mb-2">
                       ★ {doctor.rating.toFixed(1)} ({doctor.reviewCount} reviews)
